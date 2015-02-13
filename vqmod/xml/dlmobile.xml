@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>VQmod for OpenCart Mobile Sales</id>
+	<version>2.0</version>
+	<vqmver>1.0.8</vqmver>
+	<author>DLSolutions</author>
+	<file name="admin/controller/common/home.php">
+		<operation>
+			<search position="after"><![CDATA[$ignore = array(]]></search>
+			<add><![CDATA['dlmobile/server',]]></add>
+		</operation>
+	</file>
+	<file name="admin/model/sale/customer.php">
+		<operation>
+			<search position="after"><![CDATA[ModelSaleCustomer]]></search>
+			<add><![CDATA[
+			    public function dl_changeCustomerGroup($customer_id, $customer_group_id) {
+	    			$this->db->query("UPDATE " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$customer_group_id . "' WHERE customer_id = '".(int)$customer_id . "'");			    	
+					$query = $this->db->query("SELECT customer_id, customer_group_id FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$customer_id . "'");
+	
+					return $query->row;
+			    }
+			    public function dl_changeStatus($customer_id, $status) {
+	    			$this->db->query("UPDATE " . DB_PREFIX . "customer SET status = '" . (int)$status . "' WHERE customer_id = '".(int)$customer_id . "'");	    			
+					$query = $this->db->query("SELECT customer_id, status FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$customer_id . "'");
+	
+					return $query->row;
+			    }
+			    ]]></add>
+		</operation>
+	</file>
+</modification>
